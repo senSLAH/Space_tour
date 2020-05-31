@@ -11,6 +11,7 @@ void ScreenController::handleEvent(sf::Event &event)
     if(event.type == sf::Event::KeyPressed)
     {
         int key = event.key.code;
-        std::cout << key << "\n";
+        std::cout << key;
+        space.move_all_stars(key);
     }
 }

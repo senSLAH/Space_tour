@@ -16,8 +16,6 @@ int main()
 
 
 
-
-
     while (window.isOpen())
     {
         sf::Event event;
@@ -26,7 +24,9 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
             if (event.type == sf::Event::KeyPressed)
+            {
                 ctrl.handleEvent(event);
+            }
         }
         window.clear(sf::Color::Black);
         falcon.draw_falcon(window);

@@ -5,6 +5,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+enum MOVESTARS {UP = 22, DOWN = 18, LEFT = 0, RIGHT = 3};
 
 struct Star
 {
@@ -21,8 +22,10 @@ public:
     OpenSpace();
     void add_star();
     void remove_star();
-    bool on_screen(int x, int y);
+    bool on_screen(float &x, float &y);
     void set_main_star_position();
+    void move_stars(float x, float y, int star_num = 0);
+    void move_all_stars(int movestars);
     void set_star_position();
     void set_speed();
     int get_star_count();
