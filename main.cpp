@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <ctime>
 
 #include "OpenSpace.h"
 #include "ScreenController.h"
@@ -14,7 +15,7 @@ int main()
     ScreenController ctrl(space);
     Falcon_9 falcon;
 
-
+    int time;
 
     while (window.isOpen())
     {
@@ -28,11 +29,13 @@ int main()
                 ctrl.handleEvent(event);
             }
         }
+        //std::cout << ((float)clock()) / CLOCKS_PER_SEC << std::endl;
+        std::cout << space.get_star_count() << "\n";
         window.clear(sf::Color::Black);
-        falcon.draw_falcon(window);
         //наисовать звёзды
         space.set_star_position();
         space.draw_star(window);
+        falcon.draw_falcon(window);
 
         window.display();
     }

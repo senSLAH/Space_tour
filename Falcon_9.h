@@ -6,6 +6,8 @@
 class Falcon_9 {
     int speed;
     sf::RectangleShape scope;
+    sf::Texture cabine_texture;
+    sf::Sprite cabine;
 
 public:
     Falcon_9();

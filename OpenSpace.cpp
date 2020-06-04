@@ -11,16 +11,26 @@ OpenSpace::OpenSpace()
 void OpenSpace::set_main_star_position()
 {
     Star s;
-    for (int i = 0; i < 1000; ++i)
+    for (int i = 0; i < 300; ++i)
     {
         int x, y;
-        x = rand() % 2560;
-        y = rand() % 1440;
         //нрисовать схему
+
         if(rand()%2)
+        {
+            x = rand() % 1600;
+        } else{
+            x = rand() % 300;
             x *= -1;
-        if(rand()%2)
+        }
+        if (rand()%2)
+        {
+            y = rand() % 900;
+        } else{
+            y = rand() % 180;
             y *= -1;
+        }
+
         s.star_position_x = x;
         s.star_position_y = y;
         stars.push_back(s);
@@ -35,6 +45,10 @@ void OpenSpace::set_star_position()
         {
             move_stars(stars[i].star_position_x, stars[i].star_position_y, i);
         }
+        else
+        {
+            remove_star(stars[i].star_position_x, stars[i].star_position_y, i);
+        }
     }
 }
 
@@ -48,6 +62,8 @@ void OpenSpace::move_stars(float x, float y, int star_num)
         for (int i = 0; i < stars.size(); ++i)
         {
             stars[i].star_position_x += x;
+            stars[i].star_position_x += x;
+            stars[i].star_position_y += y;
             stars[i].star_position_y += y;
         }
     }
@@ -111,6 +127,39 @@ void OpenSpace::move_all_stars(int movestars)
             break;
     }
 }
+
+void OpenSpace::check_edges()
+{
+
+}
+
+void OpenSpace::remove_star(float &x, float &y, int &n)
+{
+    if(x > 1600 || x < -300 || y > 900 || y < -180)
+    {
+        stars.erase(stars.begin() + n);
+        add_star();
+    }
+}
+
+void OpenSpace::add_star()
+{
+    int x, y;
+
+    x = rand() % 423 + 423;
+    y = rand() % 240 +240;
+
+    Star s;
+    s.star_position_x = x;
+    s.star_position_y = y;
+    stars.push_back(s);
+}
+
+int OpenSpace::get_star_count()
+{
+    return stars.size();
+}
+
 
 
 

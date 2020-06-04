@@ -21,11 +21,12 @@ class OpenSpace {
 public:
     OpenSpace();
     void add_star();
-    void remove_star();
+    void remove_star(float &x, float &y, int &n);
     bool on_screen(float &x, float &y);
     void set_main_star_position();
     void move_stars(float x, float y, int star_num = 0);
     void move_all_stars(int movestars);
+    void check_edges();
     void set_star_position();
     void set_speed();
     int get_star_count();
