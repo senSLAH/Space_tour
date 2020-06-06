@@ -6,12 +6,14 @@ OpenSpace::OpenSpace()
     star_circle = sf::CircleShape(0.5);
     star_circle.setFillColor(sf::Color::White);
     space_clear = false;
+    time = ((float)clock()) / CLOCKS_PER_SEC;
+    proverka = true;
 }
 
 void OpenSpace::set_main_star_position()
 {
     Star s;
-    for (int i = 0; i < 300; ++i)
+    for (int i = 0; i < 100; ++i)
     {
         int x, y;
         //нрисовать схему
@@ -39,26 +41,30 @@ void OpenSpace::set_main_star_position()
 //center 640 360
 void OpenSpace::set_star_position()
 {
-    for (int i = 0; i < stars.size(); ++i)
+    if ((float) clock() / CLOCKS_PER_SEC - time >= 0.05 || proverka)
     {
-        if (on_screen(stars[i].star_position_x, stars[i].star_position_y))
+        for (int i = 0; i < stars.size(); ++i)
         {
-            move_stars(stars[i].star_position_x, stars[i].star_position_y, i);
-        }
-        else
-        {
-            remove_star(stars[i].star_position_x, stars[i].star_position_y, i);
+            //if (on_screen(stars[i].star_position_x, stars[i].star_position_y))
+            //{
+                move_stars(stars[i].star_position_x, stars[i].star_position_y, i);
+                proverka = false;
+                time = (float) clock() / CLOCKS_PER_SEC;
+            //}
         }
     }
+    remove_star();
 }
 
 //
 void OpenSpace::move_stars(float x, float y, int star_num)
 {
+    int screen_p = screen_part(x,y),
+        m_x = 1, m_y = 1;
     if (star_num == 5001)
     {
-        x *=3;
-        y *=3;
+        x *=1;
+        y *=1;
         for (int i = 0; i < stars.size(); ++i)
         {
             stars[i].star_position_x += x;
@@ -68,26 +74,39 @@ void OpenSpace::move_stars(float x, float y, int star_num)
         }
     }
 
+////////1:1
+     //m_y = x /1.8;
 
-    //x /= 1.7;
 //    float max = (x > y)? x : y;
-//    float min =
-//    if (x > y)
-//    {
-//        float step = x/y;
-//        x = step;
-//        ++y;
-//    }
-//    if (x < y)
-//    {
-//        float step = y/x;
-//        y = step;
-//        ++x;
-//    }
-//    x -= 0.001;
-//    y -= 0.001;
-//    stars[star_num].star_position_x = x;
-//    stars[star_num].star_position_y = y;
+//    float min = (y > x)? y : x;
+
+
+    switch (screen_p)
+    {
+        case 1:
+            x -= 1 * m_x * 1.8;
+            y -= 1 * m_y;
+            break;
+
+        case 2:
+            x += 1 * m_x * 1.8;
+            y -= 1 * m_y;
+            break;
+
+        case 3:
+            x += 1 * m_x * 1.8;
+            y += 1 * m_y;
+            break;
+
+        case 4:
+            x -= 1 * m_x * 1.8;
+            y += 1 * m_y;
+            break;
+    }
+
+    stars[star_num].star_position_x = x;
+    stars[star_num].star_position_y = y;
+    remove_star();
 }
 
 void OpenSpace::draw_star(sf::RenderWindow &win)
@@ -133,13 +152,23 @@ void OpenSpace::check_edges()
 
 }
 
-void OpenSpace::remove_star(float &x, float &y, int &n)
+void OpenSpace::remove_star()
 {
-    if(x > 1600 || x < -300 || y > 900 || y < -180)
+
+    for (int i = 0; i < stars.size(); ++i)
     {
-        stars.erase(stars.begin() + n);
-        add_star();
+        if(stars[i].star_position_x > 1600 || stars[i].star_position_x < -300 ||
+                stars[i].star_position_y > 900 || stars[i].star_position_y < -180)
+        {
+            stars.erase(stars.begin() + i);
+            add_star();
+        }
     }
+//    if(x > 1600 || x < -300 || y > 900 || y < -180)
+//    {
+//        stars.erase(stars.begin() + n);
+//        add_star();
+//    }
 }
 
 void OpenSpace::add_star()
@@ -155,9 +184,36 @@ void OpenSpace::add_star()
     stars.push_back(s);
 }
 
-int OpenSpace::get_star_count()
+int OpenSpace::get_star_count() const
 {
     return stars.size();
+}
+
+int OpenSpace::screen_part(float x, float y)
+{
+    if (x < 640)
+    {
+        if (y < 360) ////////first
+        {
+            return 1;
+        }
+        if(y > 360) ////////four
+        {
+            return 4;
+        }
+    }
+    if (x > 640)
+    {
+        if (y < 360) //////////two
+        {
+            return 2;
+        }
+        if (y > 360)/////////three
+        {
+            return 3;
+        }
+    }
+    return 0;
 }
 
 
