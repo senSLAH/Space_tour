@@ -1,6 +1,6 @@
 #include "Enemies.h"
 
-Enemies::Enemies(GameMode mode, sf::RenderWindow &win) : window(win), Enemy(mode)
+Enemies::Enemies(GameMode mode) :Enemy(mode)
 {
 
     int speed = 10;
@@ -12,10 +12,10 @@ Enemies::Enemies(GameMode mode, sf::RenderWindow &win) : window(win), Enemy(mode
     }
 }
 
-void Enemies::display_enemys()
+void Enemies::display_enemys(sf::RenderWindow &win)
 {
     for (int i = 0; i < enemy.size(); ++i)
     {
-        enemy[i].draw_enemy(window);
+        enemy[i].draw_enemy(win);
     }
 }

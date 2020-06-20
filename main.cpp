@@ -15,10 +15,10 @@ int main()
     sf::Clock clock;
 
     OpenSpace space;
-
-    ScreenController ctrl(space);
     Falcon_9 falcon;
-    Enemies enemies(NORMAL, window);
+    Enemies enemies(NORMAL);
+
+    ScreenController ctrl(space, falcon, enemies, window);
 
     int time;
 
@@ -39,16 +39,14 @@ int main()
         }
 
         sf::Time time = clock.getElapsedTime();
-        std::cout << time.asSeconds() << std::endl;
+        //std::cout << time.asSeconds() << std::endl;
 
 
         //std::cout << ((float)clock()) / CLOCKS_PER_SEC << std::endl;
         //std::cout << space.get_star_count() << "\n";
         window.clear(sf::Color::Black);
-        space.set_star_position();
-        space.draw_star(window);
-        enemies.draw_enemy(window);
-        falcon.draw_falcon(window);
+
+        ctrl.draw();
 
         window.display();
     }

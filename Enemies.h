@@ -8,13 +8,12 @@
 
 class Enemies : public Enemy{
     std::vector<Enemy> enemy;
-    sf::RenderWindow &window;
 
 public:
-    Enemies(GameMode mode, sf::RenderWindow &win);
+    Enemies(GameMode mode);
     void add_enemy();
     void remove_enemy(int &i);
-    void display_enemys();
+    void display_enemys(sf::RenderWindow &win);
 
 };
 
