@@ -5,13 +5,14 @@
 
 class Falcon_9 {
     int speed;
-    sf::RectangleShape scope;
+    sf::Texture scope_texture;
     sf::Texture cabine_texture;
-    sf::Sprite cabine;
+    sf::Sprite sprite_cabine;
+    sf::Sprite sprite_scope;
 
 public:
     Falcon_9();
-    void draw_falcon(sf::RenderWindow &win);
+    void draw_falcon(sf::RenderWindow &win) const;
     int get_speed();
 };
 

@@ -9,21 +9,33 @@ Falcon_9::Falcon_9()
         std::cerr << strerror(errno) << std::endl;
         abort();
     }
-    cabine.setTexture(cabine_texture);
-    cabine.setRotation(2);
-    cabine.setScale(1, 1.05);
-    cabine.setPosition(0, -40);
+    if (!scope_texture.loadFromFile("../IMG/scope.png"))
+    {
+        std::cerr << strerror(errno) << std::endl;
+        abort();
+    }
+
+
+    sprite_cabine.setPosition(0, 0);
+    sprite_cabine.setTexture(cabine_texture);
+    sprite_cabine.setRotation(2);
+    sprite_cabine.setScale(1, 1.05);
+    sprite_cabine.setPosition(0, -40);
+
+
+
+    sprite_scope.setTexture(scope_texture);
+    sprite_scope.setPosition(640, 360);
+
 
     speed = 5;
-    scope = sf::RectangleShape(sf::Vector2f(20, 20));
-    scope.setFillColor(sf::Color::Red);
-    scope.setPosition(10,10);
+
 }
 
-void Falcon_9::draw_falcon(sf::RenderWindow &win)
+void Falcon_9::draw_falcon(sf::RenderWindow &win) const
 {
-    win.draw(cabine);
-    win.draw(scope);
+    win.draw(sprite_cabine);
+    win.draw(sprite_scope);
 }
 
 int Falcon_9::get_speed()

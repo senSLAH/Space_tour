@@ -3,7 +3,7 @@
 
 OpenSpace::OpenSpace()
 {
-    star_circle = sf::CircleShape(0.5);
+    star_circle = sf::CircleShape(0.7);
     star_circle.setFillColor(sf::Color::White);
     space_clear = false;
     time = ((float)clock()) / CLOCKS_PER_SEC;
@@ -41,19 +41,21 @@ void OpenSpace::set_main_star_position()
 //center 640 360
 void OpenSpace::set_star_position()
 {
-    if ((float) clock() / CLOCKS_PER_SEC - time >= 0.05 || proverka)
-    {
-        for (int i = 0; i < stars.size(); ++i)
-        {
-            //if (on_screen(stars[i].star_position_x, stars[i].star_position_y))
-            //{
-                move_stars(stars[i].star_position_x, stars[i].star_position_y, i);
-                proverka = false;
-                time = (float) clock() / CLOCKS_PER_SEC;
-            //}
-        }
-    }
+     //for (int i = 0; i < stars.size(); ++i)
+//         if ((float) clock() / CLOCKS_PER_SEC - time >= 0.00001 || proverka)
+//         {
+             for (int i = 0; i < stars.size(); ++i)
+             {
+                 //if (on_screen(stars[i].star_position_x, stars[i].star_position_y))
+                 //{
+                 move_stars(stars[i].star_position_x, stars[i].star_position_y, i);
+                // proverka = false;
+                 //time = (float) clock() / CLOCKS_PER_SEC;
+                 //}
+             }
+         //}
     remove_star();
+
 }
 
 //
@@ -129,7 +131,7 @@ bool OpenSpace::on_screen(float &x, float &y)
 
 void OpenSpace::move_all_stars(int movestars)
 {
-    std::cout << movestars;
+    //std::cout << movestars;
     switch (movestars)
     {
         case 0:
@@ -154,7 +156,6 @@ void OpenSpace::check_edges()
 
 void OpenSpace::remove_star()
 {
-
     for (int i = 0; i < stars.size(); ++i)
     {
         if(stars[i].star_position_x > 1600 || stars[i].star_position_x < -300 ||
@@ -164,11 +165,6 @@ void OpenSpace::remove_star()
             add_star();
         }
     }
-//    if(x > 1600 || x < -300 || y > 900 || y < -180)
-//    {
-//        stars.erase(stars.begin() + n);
-//        add_star();
-//    }
 }
 
 void OpenSpace::add_star()
@@ -176,7 +172,7 @@ void OpenSpace::add_star()
     int x, y;
 
     x = rand() % 423 + 423;
-    y = rand() % 240 +240;
+    y = rand() % 240 + 240;
 
     Star s;
     s.star_position_x = x;
@@ -193,7 +189,7 @@ int OpenSpace::screen_part(float x, float y)
 {
     if (x < 640)
     {
-        if (y < 360) ////////first
+        if (y <= 360) ////////first
         {
             return 1;
         }
@@ -204,7 +200,7 @@ int OpenSpace::screen_part(float x, float y)
     }
     if (x > 640)
     {
-        if (y < 360) //////////two
+        if (y <= 360) //////////two
         {
             return 2;
         }
@@ -215,8 +211,4 @@ int OpenSpace::screen_part(float x, float y)
     }
     return 0;
 }
-
-
-
-
 
