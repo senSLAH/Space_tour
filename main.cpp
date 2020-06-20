@@ -35,6 +35,13 @@ int main()
             if (event.type == sf::Event::KeyPressed)
             {
                 ctrl.handleEvent(event);
+                space.key_press(event, true);
+                falcon.key_press(event, true);
+            }
+            if (event.type == sf::Event::KeyReleased)
+            {
+                space.key_press(event, false);
+                falcon.key_press(event, false);
             }
         }
 

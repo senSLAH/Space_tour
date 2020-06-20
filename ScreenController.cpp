@@ -18,14 +18,15 @@ ScreenController::ScreenController(OpenSpace &s, Falcon_9 &f, Enemies &e, sf::Re
 
 void ScreenController::handleEvent(sf::Event &event)
 {
-    int key = event.key.code;
-    //std::cout << key;
+    key = event.key.code;
+    std::cout << key;
+
     if (current_state != FINISHED)
     {
         set_state(key);
     }
 
-    space.move_all_stars(key);
+    space.move_falcon(key);
 }
 
 void ScreenController::draw()
@@ -36,7 +37,7 @@ void ScreenController::draw()
         start_screen_func(window);
 
     }
-    if (current_state == START && start_screen == false)
+    if (current_state == RUNNING)
     {
         running();
     }
@@ -59,5 +60,10 @@ void ScreenController::running()
 {
     space.set_star_position();
     space.draw_star(window);
+    falcon.lasers(window);
+    falcon.set_laser_pos();
     falcon.draw_falcon(window);
 }
+
+
+

@@ -19,10 +19,11 @@ Menu::Menu()
 void Menu::set_state(int key)
 {
     //36 - escape
-    if (key == 36)
+    if (key == 36 && start_screen == false)
     {
         current_state = last_state;
         state_int = 0;
+        highlight_pos_y = 179;
         start_screen = true;
     }
     else
@@ -41,7 +42,9 @@ void Menu::set_state(int key)
                     highlight_pos_y = 139;
                 }
                 else
+                {
                     ++state_int;
+                }
                 highlight_pos_y += 40;
                 break;
             case 73:
@@ -51,12 +54,19 @@ void Menu::set_state(int key)
                     highlight_pos_y = 299;
                 }
                 else
+                {
                     --state_int;
+                }
                 highlight_pos_y -= 40;
                 break;
             case 58:
                 last_state = current_state;
-                current_state = static_cast<GameState>(state_int);
+
+                if (state_int == 0)
+                    current_state = RUNNING;
+                else
+                    current_state = static_cast<GameState>(state_int);
+
                 start_screen = false;
                 break;
         }

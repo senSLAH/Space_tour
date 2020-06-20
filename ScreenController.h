@@ -17,7 +17,7 @@ class ScreenController : public Menu{
 
     sf::Texture back_ground_txture;
     sf::Sprite back_ground;
-
+    int key;
 
 public:
     ScreenController(OpenSpace &s, Falcon_9 &f, Enemies &e, sf::RenderWindow &w);

@@ -2,7 +2,7 @@
 #define SPACETOUR__MENU_H
 
 
-enum GameState : int {START= 0, SETTINGS = 1, HOW_TO_PLAY = 2, FINISHED = 333};
+enum GameState : int {START= 0, SETTINGS = 1, HOW_TO_PLAY = 2, RUNNING = 332, FINISHED = 333};
 
 class Menu {
 
