@@ -26,6 +26,9 @@ public:
     void lasers(sf::RenderWindow &win);
     void key_press(sf::Event &e, bool set);
     void set_laser_pos();
+    int get_scope_pos_x() const;
+    int get_scope_pos_y() const;
+    bool get_laser_condition() const;
     void return_laser();
     int get_speed();
 };

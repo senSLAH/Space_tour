@@ -22,11 +22,12 @@ class Enemy {
 
 public:
     explicit Enemy(GameMode mode);
-    void hit(int &h);
+    void hit(int h);
     void set_health(int h);
     void set_speed(int s);
     void set_rand_position();
     void set_position(int pos_x, int pos_y);
+    Unit get_position();
     void draw_enemy(sf::RenderWindow &win);
     int get_health() const;
     int get_speed() const;

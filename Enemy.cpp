@@ -28,7 +28,7 @@ Enemy::Enemy(GameMode mode)
     }
 }
 
-void Enemy::hit(int &h)
+void Enemy::hit(int h)
 {
     health -= h;
 }
@@ -71,6 +71,11 @@ void Enemy::set_position(int pos_x, int pos_y)
     unit.position_x += pos_x;
     unit.position_y += pos_y;
     enemy_sprite.setPosition(unit.position_x,unit.position_y);
+}
+
+Unit Enemy::get_position()
+{
+    return unit;
 }
 
 

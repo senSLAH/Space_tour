@@ -139,4 +139,19 @@ void Falcon_9::return_laser()
     }
 }
 
+int Falcon_9::get_scope_pos_x() const
+{
+    return scope_pos_x;
+}
+
+int Falcon_9::get_scope_pos_y() const
+{
+    return scope_pos_y;
+}
+
+bool Falcon_9::get_laser_condition() const
+{
+    return laser_bool;
+}
+
 

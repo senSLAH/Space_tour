@@ -24,6 +24,7 @@ public:
     void handleEvent(sf::Event &e);
     void draw_gameplay(sf::RenderWindow &win) const;
     void start_screen_func(sf::RenderWindow &win);
+    int collition_laser();
     void option_screem_func();
     void how_to_play_screen_func();
     void running();

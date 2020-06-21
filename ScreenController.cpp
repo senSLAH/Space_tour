@@ -16,13 +16,12 @@ ScreenController::ScreenController(OpenSpace &s, Falcon_9 &f, Enemies &e, sf::Re
     space.set_main_star_position();
     enemies.add_enemy();
     enemies.add_enemy();
-
 }
 
 void ScreenController::handleEvent(sf::Event &event)
 {
     key = event.key.code;
-    std::cout << key;
+    //std::cout << key;
 
     if (current_state != FINISHED)
     {
@@ -61,13 +60,39 @@ void ScreenController::start_screen_func(sf::RenderWindow &win)
 
 void ScreenController::running()
 {
+    if (falcon.get_laser_condition())
+    {
+        int enemy_n = collition_laser();
+        if (enemy_n != 100)
+        {
+            enemies.remove_enemy(enemy_n);
+        }
+    }
+
     space.set_star_position();
     space.draw_star(window);
     enemies.draw_enemys(window);
     falcon.set_laser_pos();
     falcon.lasers(window);
     falcon.draw_falcon(window);
+}
 
+int ScreenController::collition_laser()
+{
+    int scope_x = falcon.get_scope_pos_x() + 40;
+    int scope_y = falcon.get_scope_pos_y() + 40;
+
+    for (int i = 0; i < enemies.get_enemies_count(); ++i)
+    {
+        int enemy_pos_x = enemies.get_enemy(i).get_position().position_x + 21;
+        int enemy_pos_y = enemies.get_enemy(i).get_position().position_y + 10;
+        if (scope_x >= enemy_pos_x && scope_x <= enemy_pos_x + 125
+        && scope_y >= enemy_pos_y && scope_y <= enemy_pos_y + 58)
+        {
+            return i;
+        }
+    }
+    return 100;
 }
 
 

@@ -13,7 +13,6 @@ OpenSpace::OpenSpace(Enemies &e): enemies(e)
     up = false;
     right = false;
     down = false;
-
 }
 
 void OpenSpace::set_main_star_position()

@@ -13,10 +13,13 @@ class Enemies : public Enemy{
 public:
     Enemies(GameMode m);
     void add_enemy();
-    void remove_enemy(int &i);
-    int get_enemies_count() const;
+    void remove_enemy(int &idx);
+    void check_health(int idx);
     void set_position(int n, int pos_x, int pos_y);
+    int get_enemies_count() const;
+    Enemy get_enemy(int idx);
     void draw_enemys(sf::RenderWindow &win);
+
 };
 
 
