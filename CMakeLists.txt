@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(SpaceTour_ main.cpp OpenSpace.cpp OpenSpace.h ScreenController.cpp ScreenController.h Falcon_9.cpp Falcon_9.h Enemy.cpp Enemy.h Enemies.cpp Enemies.h Menu.cpp Menu.h)
 
-add_compile_options(-Wall -Wextra)
+add_compile_options(-Wall -Wextra -pedantic)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

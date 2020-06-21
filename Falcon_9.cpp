@@ -22,6 +22,12 @@ Falcon_9::Falcon_9()
     laser_bool = false;
     right_or_left_laser = true;
 
+    health = 50;
+
+    healt_elem = sf::RectangleShape(sf::Vector2f(5, 20));
+    healt_elem.setFillColor(sf::Color::Red);
+    health_bar_position_x = 15;
+
     sprite_cabine.setPosition(0, 0);
     sprite_cabine.setTexture(cabine_texture);
     sprite_cabine.setRotation(2);
@@ -39,10 +45,16 @@ Falcon_9::Falcon_9()
 
 }
 
-void Falcon_9::draw_falcon(sf::RenderWindow &win) const
+void Falcon_9::draw_falcon(sf::RenderWindow &win)
 {
-    win.draw(sprite_cabine);
+    set_health_bar();
+
     win.draw(sprite_scope);
+    win.draw(sprite_cabine);
+    for (int i = 0; i < health; ++i)
+    {
+        win.draw(health_bar[i]);
+    }
 }
 
 int Falcon_9::get_speed()
@@ -152,6 +164,17 @@ int Falcon_9::get_scope_pos_y() const
 bool Falcon_9::get_laser_condition() const
 {
     return laser_bool;
+}
+
+void Falcon_9::set_health_bar()
+{
+    for (int i = 0; i < health; ++i)
+    {
+        health_bar_position_x += 7;
+        healt_elem.setPosition(health_bar_position_x,15);
+        health_bar.push_back(healt_elem);
+
+    }
 }
 
 

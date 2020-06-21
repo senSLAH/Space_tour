@@ -22,11 +22,6 @@ Enemy Enemies::get_enemy(int idx)
     return enemy[idx];
 }
 
-//void Enemies::check_health(int idx)
-//{
-//    if (enemy[idx].get_health() <= 0)
-//        remove_enemy(idx);
-//}
 
 void Enemies::add_enemy()
 {
@@ -43,7 +38,6 @@ void Enemies::remove_enemy(int &idx)
         enemy.erase(enemy.begin() + idx);
         add_enemy();
     }
-
 }
 
 void Enemies::draw_enemys(sf::RenderWindow &win)

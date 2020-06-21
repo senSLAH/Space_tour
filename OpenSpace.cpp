@@ -121,25 +121,25 @@ void OpenSpace::move_falcon(int &i)
     if (left)
     {
         stars[i].star_position_x += 2;
-        if (i <= check)
+        if (i < check)
             enemies.set_position(i,3,0);
     }
     if (up)
     {
         stars[i].star_position_y += 2;
-        if (i <= check)
+        if (i < check)
             enemies.set_position(i,0,3);
     }
     if (right)
     {
         stars[i].star_position_x -= 2;
-        if (i <= check)
+        if (i < check)
             enemies.set_position(i,-3,0);
     }
     if (down)
     {
         stars[i].star_position_y -= 2;
-        if (i <= check)
+        if (i < check)
             enemies.set_position(i,0,-3);
     }
 }

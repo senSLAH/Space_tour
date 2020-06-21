@@ -9,7 +9,7 @@ class Falcon_9 {
     sf::Texture cabine_texture;
     sf::Sprite sprite_cabine;
     sf::Sprite sprite_scope;
-    sf::VertexArray laser;
+    sf::RectangleShape healt_elem;
 
     bool left_laser;
     bool up_laser;
@@ -19,12 +19,16 @@ class Falcon_9 {
     bool right_or_left_laser;
     int scope_pos_x;
     int scope_pos_y;
+    int health;
+    float health_bar_position_x;
+    std::vector<sf::RectangleShape> health_bar;
 
 public:
     Falcon_9();
-    void draw_falcon(sf::RenderWindow &win) const;
+    void draw_falcon(sf::RenderWindow &win);
     void lasers(sf::RenderWindow &win);
     void key_press(sf::Event &e, bool set);
+    void set_health_bar();
     void set_laser_pos();
     int get_scope_pos_x() const;
     int get_scope_pos_y() const;
