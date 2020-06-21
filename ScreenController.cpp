@@ -14,6 +14,9 @@ ScreenController::ScreenController(OpenSpace &s, Falcon_9 &f, Enemies &e, sf::Re
     back_ground.setTexture(back_ground_txture);
 
     space.set_main_star_position();
+    enemies.add_enemy();
+    enemies.add_enemy();
+
 }
 
 void ScreenController::handleEvent(sf::Event &event)
@@ -60,9 +63,11 @@ void ScreenController::running()
 {
     space.set_star_position();
     space.draw_star(window);
-    falcon.lasers(window);
+    enemies.draw_enemys(window);
     falcon.set_laser_pos();
+    falcon.lasers(window);
     falcon.draw_falcon(window);
+
 }
 
 

@@ -14,9 +14,10 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1280, 720), "Space Tour");
     sf::Clock clock;
 
-    OpenSpace space;
+
     Falcon_9 falcon;
     Enemies enemies(NORMAL);
+    OpenSpace space(enemies);
 
     ScreenController ctrl(space, falcon, enemies, window);
 
@@ -54,6 +55,7 @@ int main()
         window.clear(sf::Color::Black);
 
         ctrl.draw();
+
 
         window.display();
     }

@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "Enemies.h"
 
 enum MOVESTARS {UP = 22, DOWN = 18, LEFT = 0, RIGHT = 3};
 
@@ -26,10 +27,10 @@ class OpenSpace {
     bool right;
     sf::Texture moon_texture;
     sf::Sprite moon;
-
+    Enemies &enemies;
 
 public:
-    OpenSpace();
+    OpenSpace(Enemies &e);
     void add_star();
     void remove_star();
     bool on_screen(float &x, float &y);
@@ -40,6 +41,7 @@ public:
     int screen_part(float x, float y);
     void check_edges();
     void set_star_position();
+    void set_enemy_position();
     void set_speed();
     int get_star_count() const;
     int get_star_position_x() const;

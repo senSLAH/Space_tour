@@ -95,9 +95,9 @@ void Falcon_9::set_laser_pos()
         scope_pos_x += 5;
     if (down_laser)
         scope_pos_y += 5;
-    else
-        return_laser();
 
+
+    return_laser();
     sprite_scope.setPosition(scope_pos_x, scope_pos_y);
 }
 

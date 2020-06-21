@@ -1,7 +1,7 @@
 #include <iostream>
 #include "OpenSpace.h"
 
-OpenSpace::OpenSpace()
+OpenSpace::OpenSpace(Enemies &e): enemies(e)
 {
 
     star_circle = sf::CircleShape(0.7);
@@ -59,6 +59,7 @@ void OpenSpace::set_star_position()
 //    proverka = false;
 //    time = (float) clock() / CLOCKS_PER_SEC;
     remove_star();
+
 }
 
 //
@@ -116,22 +117,31 @@ bool OpenSpace::on_screen(float &x, float &y)
 
 void OpenSpace::move_falcon(int &i)
 {
+    int check = enemies.get_enemies_count();
 
     if (left)
     {
         stars[i].star_position_x += 2;
+        if (i <= check)
+            enemies.set_position(i,3,0);
     }
     if (up)
     {
         stars[i].star_position_y += 2;
+        if (i <= check)
+            enemies.set_position(i,0,3);
     }
     if (right)
     {
         stars[i].star_position_x -= 2;
+        if (i <= check)
+            enemies.set_position(i,-3,0);
     }
     if (down)
     {
         stars[i].star_position_y -= 2;
+        if (i <= check)
+            enemies.set_position(i,0,-3);
     }
 }
 
@@ -213,6 +223,8 @@ int OpenSpace::screen_part(float x, float y)
     }
     return 0;
 }
+
+
 
 
 
