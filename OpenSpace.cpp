@@ -3,11 +3,9 @@
 
 OpenSpace::OpenSpace(Enemies &e): enemies(e)
 {
-
     star_circle = sf::CircleShape(0.7);
     star_circle.setFillColor(sf::Color::White);
     space_clear = false;
-    time = ((float)clock()) / CLOCKS_PER_SEC;
     proverka = true;
     left = false;
     up = false;
@@ -46,48 +44,48 @@ void OpenSpace::set_main_star_position()
 //center 640 360
 void OpenSpace::set_star_position()
 {
+    if (current_time.asMicroseconds() > 1)
+    {
+        for (int i = 0; i < stars.size(); ++i)
+        {
+            move_stars(stars[i].star_position_x, stars[i].star_position_y, i);
+        }
+        clock.restart();
+    }
 
     for (int i = 0; i < stars.size(); ++i)
     {
-        //if ((float) clock() / CLOCKS_PER_SEC - time >= 0.009 || proverka)
-        //{
-            move_stars(stars[i].star_position_x, stars[i].star_position_y, i);
-        //}
         move_falcon(i);
     }
-//    proverka = false;
-//    time = (float) clock() / CLOCKS_PER_SEC;
-    remove_star();
 
+    remove_star();
 }
 
 //
 void OpenSpace::move_stars(float x, float y, int star_num)
 {
-    int screen_p = screen_part(x,y),
-        m_x = 1, m_y = 1;
-
+    int screen_p = screen_part(x,y);
 
     switch (screen_p)
     {
         case 1:
-            x -= 1 * m_x * 1.8;
-            y -= 1 * m_y;
+            x -= 0.1 * 1.8;
+            y -= 0.1;
             break;
 
         case 2:
-            x += 1 * m_x * 1.8;
-            y -= 1 * m_y;
+            x += 0.1 * 1.8;
+            y -= 0.1;
             break;
 
         case 3:
-            x += 1 * m_x * 1.8;
-            y += 1 * m_y;
+            x += 0.1 * 1.8;
+            y += 0.1;
             break;
 
         case 4:
-            x -= 1 * m_x * 1.8;
-            y += 1 * m_y;
+            x -= 0.1 * 1.8;
+            y += 0.1;
             break;
     }
 
@@ -98,6 +96,8 @@ void OpenSpace::move_stars(float x, float y, int star_num)
 
 void OpenSpace::draw_star(sf::RenderWindow &win)
 {
+    sf::Time time = clock.getElapsedTime();
+    current_time = time;
     for (int i = 0; i < stars.size(); ++i)
     {
         star_circle.setPosition(stars[i].star_position_x, stars[i].star_position_y);
@@ -122,32 +122,32 @@ void OpenSpace::move_falcon(int &i)
     {
         stars[i].star_position_x += 2;
         if (i < check)
-            enemies.set_position(i,3,0);
+            enemies.set_position(i,4,0);
     }
     if (up)
     {
         stars[i].star_position_y += 2;
         if (i < check)
-            enemies.set_position(i,0,3);
+            enemies.set_position(i,0,4);
     }
     if (right)
     {
         stars[i].star_position_x -= 2;
         if (i < check)
-            enemies.set_position(i,-3,0);
+            enemies.set_position(i,-4,0);
     }
     if (down)
     {
         stars[i].star_position_y -= 2;
         if (i < check)
-            enemies.set_position(i,0,-3);
+            enemies.set_position(i,0,-4);
     }
 }
 
 void OpenSpace::key_press(sf::Event &e, bool set)
 {
     int key = e.key.code;
-    std::cout << key;
+    //std::cout << key;
     switch (key)
     {
         case 0:

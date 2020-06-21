@@ -47,8 +47,9 @@ Falcon_9::Falcon_9()
 
 void Falcon_9::draw_falcon(sf::RenderWindow &win)
 {
+    sf::Time time = clock.getElapsedTime();
+    current_time = time;
     set_health_bar();
-
     win.draw(sprite_scope);
     win.draw(sprite_cabine);
     for (int i = 0; i < health; ++i)
@@ -93,7 +94,11 @@ void Falcon_9::lasers(sf::RenderWindow &win)
         {
             win.draw(laser2);
         }
-        (right_or_left_laser)? right_or_left_laser = false : right_or_left_laser = true;
+        if(current_time.asMilliseconds() > 70)
+        {
+            (right_or_left_laser)? right_or_left_laser = false : right_or_left_laser = true;
+            clock.restart();
+        }
     }
 }
 
@@ -116,7 +121,7 @@ void Falcon_9::set_laser_pos()
 void Falcon_9::key_press(sf::Event &e, bool set)
 {
     int key = e.key.code;
-    std::cout << key;
+
     switch (key)
     {
         case 71:

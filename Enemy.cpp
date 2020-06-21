@@ -55,27 +55,65 @@ int Enemy::get_speed() const
 
 void Enemy::set_rand_position()
 {
-    unit.position_x = rand() % 1280;
-    unit.position_y = rand() % 535;
+    if(rand() % 2)
+    {
+        unit.position_x = -200;
+    }
+    else
+    {
+        unit.position_x = 1480;
+    }
+    if (rand() % 2)
+    {
+        unit.position_y = -100;
+    }
+    else
+    {
+        unit.position_y = 820;
+    }
+
     enemy_sprite.setPosition(unit.position_x, unit.position_y);
 }
 
 void Enemy::draw_enemy(sf::RenderWindow &win)
 {
     enemy_sprite.setTexture(enemy_texture);
+    enemy_sprite.setPosition(unit.position_x,unit.position_y);
     win.draw(enemy_sprite);
 }
 
-void Enemy::set_position(int pos_x, int pos_y)
+void Enemy::set_position(int pos_x, int pos_y, std::string str)
 {
-    unit.position_x += pos_x;
-    unit.position_y += pos_y;
+    if (str == "equel")
+    {
+        unit.position_x = pos_x;
+        unit.position_y = pos_y;
+    }
+    if (str == "increase")
+    {
+        unit.position_x += pos_x;
+        unit.position_y += pos_y;
+    }
+
     enemy_sprite.setPosition(unit.position_x,unit.position_y);
 }
 
 Unit Enemy::get_position()
 {
     return unit;
+}
+
+Unit Enemy::set_rand_position_on_the_screen()
+{
+    Unit position;
+    position.position_x = rand() % 960 + 160;
+    position.position_y = rand() % 540;
+    return position;
+}
+
+bool Enemy::need_or_not_move_enemy()
+{
+    return false;
 }
 
 

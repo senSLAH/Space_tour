@@ -26,8 +26,10 @@ public:
     void set_health(int h);
     void set_speed(int s);
     void set_rand_position();
-    void set_position(int pos_x, int pos_y);
+    Unit set_rand_position_on_the_screen();
+    void set_position(int pos_x, int pos_y, std::string str = "increase");
     Unit get_position();
+    bool need_or_not_move_enemy();
     void draw_enemy(sf::RenderWindow &win);
     int get_health() const;
     int get_speed() const;

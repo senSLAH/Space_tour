@@ -15,13 +15,14 @@ int main()
     sf::Clock clock;
 
 
+
+
     Falcon_9 falcon;
     Enemies enemies(NORMAL);
     OpenSpace space(enemies);
 
     ScreenController ctrl(space, falcon, enemies, window);
 
-    int time;
 
     window.setFramerateLimit(30);
 
@@ -41,13 +42,12 @@ int main()
             }
             if (event.type == sf::Event::KeyReleased)
             {
-                ctrl.handleEvent(event);
                 space.key_press(event, false);
                 falcon.key_press(event, false);
             }
         }
 
-        sf::Time time = clock.getElapsedTime();
+
         //std::cout << time.asSeconds() << std::endl;
 
 

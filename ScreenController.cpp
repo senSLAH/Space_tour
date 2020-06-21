@@ -10,9 +10,14 @@ ScreenController::ScreenController(OpenSpace &s, Falcon_9 &f, Enemies &e, sf::Re
         std::cerr << strerror(errno) << std::endl;
         abort();
     }
+    if (!mode_txture.loadFromFile("../IMG/mode.png"))
+    {
+        std::cerr << strerror(errno) << std::endl;
+        abort();
+    }
 
     back_ground.setTexture(back_ground_txture);
-
+    mode.setTexture(mode_txture);
     space.set_main_star_position();
     enemies.add_enemy();
     enemies.add_enemy();
@@ -45,7 +50,7 @@ void ScreenController::draw()
     }
     if (current_state == SETTINGS)
     {
-        std::cout << "SETTINGS\n";
+        option_screem_func();
     }
     if (current_state == HOW_TO_PLAY)
     {
@@ -67,6 +72,14 @@ void ScreenController::running()
         {
             enemies.remove_enemy(enemy_n);
         }
+    }
+
+    for (int i = 0; i < enemies.get_enemies_count(); ++i)
+    {
+        int pos_x = enemies.get_enemy(i).get_position().position_x;
+        int pos_y = enemies.get_enemy(i).get_position().position_y;
+        if (pos_x >= 1120 || pos_x <= 0 || pos_y <= 0 || pos_y > 540)
+            enemies.move_back_to_screen(i);
     }
 
     space.set_star_position();
@@ -93,6 +106,11 @@ int ScreenController::collition_laser()
         }
     }
     return 100;
+}
+
+void ScreenController::option_screem_func()
+{
+    window.draw(mode);
 }
 
 

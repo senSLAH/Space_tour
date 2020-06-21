@@ -17,6 +17,8 @@ class ScreenController : public Menu{
 
     sf::Texture back_ground_txture;
     sf::Sprite back_ground;
+    sf::Texture mode_txture;
+    sf::Sprite mode;
     int key;
 
 public:

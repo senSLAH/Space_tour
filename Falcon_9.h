@@ -22,6 +22,8 @@ class Falcon_9 {
     int health;
     float health_bar_position_x;
     std::vector<sf::RectangleShape> health_bar;
+    sf::Clock clock;
+    sf::Time current_time;
 
 public:
     Falcon_9();

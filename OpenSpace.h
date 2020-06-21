@@ -28,6 +28,8 @@ class OpenSpace {
     sf::Texture moon_texture;
     sf::Sprite moon;
     Enemies &enemies;
+    sf::Clock clock;
+    sf::Time current_time;
 
 public:
     OpenSpace(Enemies &e);
