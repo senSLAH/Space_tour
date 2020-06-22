@@ -15,16 +15,13 @@ struct Star
 };
 
 class OpenSpace {
-    int star_counter;
-    float time;
-    bool proverka;///////////////
-    bool space_clear;
     std::vector<Star> stars;
     sf::CircleShape star_circle;
     bool up;
     bool down;
     bool left;
     bool right;
+
     sf::Texture moon_texture;
     sf::Sprite moon;
     Enemies &enemies;
@@ -39,17 +36,14 @@ public:
     void set_main_star_position();
     void move_stars(float x, float y, int star_num = 0);
     void move_falcon(int &i);
-    void move_falcon();
     int screen_part(float x, float y);
     void check_edges();
     void set_star_position();
-    void set_enemy_position();
-    void set_speed();
     int get_star_count() const;
-    int get_star_position_x() const;
-    int get_star_position_y() const;
     void key_press(sf::Event &e, bool set);
     void draw_star(sf::RenderWindow &win);
+    void restart_clock();
+    void reset_space();
 };
 
 

@@ -1,43 +1,39 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include "Menu.h"
 
 Menu::Menu()
 {
-    last_state = current_state = START;
-    last_state_int = state_int = 0;
+    current_state = START;
+    state_int = 0;
     start_screen = true;
+    option_screen = false;
+    game_mode = HERO;
 
     highlight_pos_y = 179;
-
     highlight = sf::RectangleShape(sf::Vector2f(255, 40));
     highlight.setPosition(65, highlight_pos_y);
     highlight.setFillColor(sf::Color(132, 77, 248));
-
 }
 
-void Menu::set_state(int key, GameState state)
+void Menu::set_state(int key)
 {
-    if (state != NON)
-    {
-        last_state = START;
-        current_state = START;
-    }
     //36 - escape
     if (key == 36 && !start_screen)
     {
-        current_state = last_state;
+        current_state = START;
         state_int = 0;
         highlight_pos_y = 179;
         start_screen = true;
+        option_screen = false;
     }
-    else
+
+    if (key == 99)
     {
-        last_state_int = state_int;
+        current_state = FINISHED;
+        return;
     }
 
-
-    if (start_screen)
+    if (start_screen || option_screen)
     {
         switch (key) {
             case 74:
@@ -65,25 +61,51 @@ void Menu::set_state(int key, GameState state)
                 highlight_pos_y -= 40;
                 break;
             case 58:
-                last_state = current_state;
-
-                if (state_int == 0)
-                    current_state = RUNNING;
-                else
-                    current_state = static_cast<GameState>(state_int);
-
-                start_screen = false;
+                batton_ctrl();
+                state_int = 0;
+                highlight_pos_y = 179;
                 break;
         }
     }
-
-    //std::cout << "\nCurrent state: "<< static_cast<int>(current_state);
-
+    highlight.setPosition(65, highlight_pos_y);
 }
 
-int Menu::get_state()
+void Menu::batton_ctrl()
 {
-    return static_cast<int>(current_state);
+    if(current_state == START)
+    {
+        current_state = static_cast<GameState>(state_int);
+        start_screen = false;
+    }
+    else if (current_state == SETTINGS)
+    {
+
+        game_mode = static_cast<GameMode>(state_int);
+        start_screen = true;
+        option_screen = false;
+        current_state = START;
+    }
 }
+
+std::string Menu::get_mode()
+{
+    if (game_mode == 0)
+    {
+        return "Mode: NORMAL";
+    }
+    if (game_mode == 1)
+    {
+        return "Mode: HERO";
+    }
+    if (game_mode == 2)
+    {
+        return "Mode: GOD";
+    }
+    return "";
+}
+
+
+
+
 
 

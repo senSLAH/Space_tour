@@ -5,8 +5,6 @@ OpenSpace::OpenSpace(Enemies &e): enemies(e)
 {
     star_circle = sf::CircleShape(0.7);
     star_circle.setFillColor(sf::Color::White);
-    space_clear = false;
-    proverka = true;
     left = false;
     up = false;
     right = false;
@@ -19,23 +17,25 @@ void OpenSpace::set_main_star_position()
     for (int i = 0; i < 100; ++i)
     {
         int x, y;
-        //нрисовать схему
 
-        if(rand()%2)
+        if(rand() % 2)
         {
             x = rand() % 1600;
-        } else{
+        }
+        else
+        {
             x = rand() % 300;
             x *= -1;
         }
         if (rand()%2)
         {
             y = rand() % 900;
-        } else{
+        }
+        else
+        {
             y = rand() % 180;
             y *= -1;
         }
-
         s.star_position_x = x;
         s.star_position_y = y;
         stars.push_back(s);
@@ -57,11 +57,9 @@ void OpenSpace::set_star_position()
     {
         move_falcon(i);
     }
-
     remove_star();
 }
 
-//
 void OpenSpace::move_stars(float x, float y, int star_num)
 {
     int screen_p = screen_part(x,y);
@@ -88,30 +86,9 @@ void OpenSpace::move_stars(float x, float y, int star_num)
             y += 0.1;
             break;
     }
-
     stars[star_num].star_position_x = x;
     stars[star_num].star_position_y = y;
     remove_star();
-}
-
-void OpenSpace::draw_star(sf::RenderWindow &win)
-{
-    sf::Time time = clock.getElapsedTime();
-    current_time = time;
-    for (int i = 0; i < stars.size(); ++i)
-    {
-        star_circle.setPosition(stars[i].star_position_x, stars[i].star_position_y);
-        win.draw(star_circle);
-    }
-}
-
-bool OpenSpace::on_screen(float &x, float &y)
-{
-    if (x < 0 || x > 1280)
-        return false;
-    if (y < 0 || y > 720)
-        return false;
-    return true;
 }
 
 void OpenSpace::move_falcon(int &i)
@@ -147,7 +124,6 @@ void OpenSpace::move_falcon(int &i)
 void OpenSpace::key_press(sf::Event &e, bool set)
 {
     int key = e.key.code;
-    //std::cout << key;
     switch (key)
     {
         case 0:
@@ -163,6 +139,33 @@ void OpenSpace::key_press(sf::Event &e, bool set)
             down = set;
             break;
     }
+}
+
+int OpenSpace::screen_part(float x, float y)
+{
+    if (x <= 640)
+    {
+        if (y <= 360) ////////first
+        {
+            return 1;
+        }
+        if(y >= 360) ////////four
+        {
+            return 4;
+        }
+    }
+    if (x > 640)
+    {
+        if (y < 360) //////////two
+        {
+            return 2;
+        }
+        if (y > 360)/////////three
+        {
+            return 3;
+        }
+    }
+    return 0;
 }
 
 void OpenSpace::remove_star()
@@ -191,36 +194,25 @@ void OpenSpace::add_star()
     stars.push_back(s);
 }
 
-int OpenSpace::get_star_count() const
+void OpenSpace::draw_star(sf::RenderWindow &win)
 {
-    return stars.size();
+    sf::Time time = clock.getElapsedTime();
+    current_time = time;
+    for (int i = 0; i < stars.size(); ++i)
+    {
+        star_circle.setPosition(stars[i].star_position_x, stars[i].star_position_y);
+        win.draw(star_circle);
+    }
 }
 
-int OpenSpace::screen_part(float x, float y)
+void OpenSpace::reset_space()
 {
-    if (x < 640)
-    {
-        if (y <= 360) ////////first
-        {
-            return 1;
-        }
-        if(y > 360) ////////four
-        {
-            return 4;
-        }
-    }
-    if (x > 640)
-    {
-        if (y <= 360) //////////two
-        {
-            return 2;
-        }
-        if (y > 360)/////////three
-        {
-            return 3;
-        }
-    }
-    return 0;
+    stars.clear();
+}
+
+void OpenSpace::restart_clock()
+{
+    clock.restart();
 }
 
 

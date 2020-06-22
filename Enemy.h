@@ -5,7 +5,7 @@
 
 
 
-enum GameMode: int {NORMAL, HERO, GOD};
+enum GameMode: int {NORMAL = 0, HERO = 1, GOD};
 
 struct Position
 {
@@ -15,7 +15,6 @@ struct Position
 
 class Enemy {
     int health;
-    int speed;
     int attack;
     sf::Texture enemy_texture;
     sf::Sprite enemy_sprite;
@@ -32,7 +31,6 @@ public:
     Position get_position() const;
     int get_health() const;
     int get_attack() const;
-
     void draw_enemy(sf::RenderWindow &win);
 };
 

@@ -14,9 +14,6 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1280, 720), "Space Tour");
     sf::Clock clock;
 
-
-
-
     Falcon_9 falcon;
     Enemies enemies(NORMAL);
     OpenSpace space(enemies);
@@ -46,20 +43,9 @@ int main()
                 falcon.key_press(event, false);
             }
         }
-
-
-        //std::cout << time.asSeconds() << std::endl;
-
-
-        //std::cout << ((float)clock()) / CLOCKS_PER_SEC << std::endl;
-        //std::cout << space.get_star_count() << "\n";
         window.clear(sf::Color::Black);
-
         ctrl.draw();
-
-
         window.display();
     }
-
     return 0;
 }

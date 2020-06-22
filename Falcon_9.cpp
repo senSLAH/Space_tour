@@ -1,9 +1,15 @@
 #include <iostream>
 #include "Falcon_9.h"
+#include "sstream"
 
 
 Falcon_9::Falcon_9()
 {
+    if (!font.loadFromFile("../Fonts/Arial.ttf"))
+    {
+        std::cerr << strerror(errno) << std::endl;
+        abort();
+    }
     if (!cabine_texture.loadFromFile("../IMG/cabine1.png"))
     {
         std::cerr << strerror(errno) << std::endl;
@@ -22,11 +28,12 @@ Falcon_9::Falcon_9()
     laser_bool = false;
     right_or_left_laser = true;
 
+    score = 0;
     health = 50;
 
     healt_elem = sf::RectangleShape(sf::Vector2f(5, 20));
     healt_elem.setFillColor(sf::Color::Red);
-    health_bar_position_x = 15;
+    health_bar_position_x = 5;
 
     sprite_cabine.setPosition(0, 0);
     sprite_cabine.setTexture(cabine_texture);
@@ -34,15 +41,25 @@ Falcon_9::Falcon_9()
     sprite_cabine.setScale(1, 1.05);
     sprite_cabine.setPosition(0, -40);
 
+
     scope_pos_x = 640;
     scope_pos_y = 360;
 
     sprite_scope.setTexture(scope_texture);
     sprite_scope.setPosition(scope_pos_x, scope_pos_y);
 
+    score_txt.setFont(font);
+    score_txt.setString("Score: ");
+    score_txt.setFillColor(sf::Color(132, 77, 248));
+    score_txt.setPosition(1110,5);
 
-    speed = 5;
+    score_num.setFont(font);
+    score_num.setFillColor(sf::Color(132, 77, 248));
+    score_num.setPosition(1215,5);
 
+    mode_txt.setFont(font);
+    mode_txt.setPosition(1040,670);
+    mode_txt.setFillColor(sf::Color(132, 77, 248));
 }
 
 void Falcon_9::lasers(sf::RenderWindow &win)
@@ -95,7 +112,6 @@ void Falcon_9::set_laser_pos()
     if (down_laser)
         scope_pos_y += 5;
 
-
     return_laser();
     sprite_scope.setPosition(scope_pos_x, scope_pos_y);
 }
@@ -138,12 +154,12 @@ void Falcon_9::return_laser()
     }
 }
 
-int Falcon_9::get_scope_pos_x() const
+float Falcon_9::get_scope_pos_x() const
 {
     return scope_pos_x;
 }
 
-int Falcon_9::get_scope_pos_y() const
+float Falcon_9::get_scope_pos_y() const
 {
     return scope_pos_y;
 }
@@ -158,9 +174,8 @@ void Falcon_9::set_health_bar()
     for (int i = 0; i < health; ++i)
     {
         health_bar_position_x += 7;
-        healt_elem.setPosition(health_bar_position_x,15);
+        healt_elem.setPosition(health_bar_position_x,5);
         health_bar.push_back(healt_elem);
-
     }
 }
 
@@ -181,10 +196,67 @@ void Falcon_9::draw_falcon(sf::RenderWindow &win)
     set_health_bar();
     win.draw(sprite_scope);
     win.draw(sprite_cabine);
+    draw_score(win);
     for (int i = 0; i < health; ++i)
     {
         win.draw(health_bar[i]);
     }
 }
+
+void Falcon_9::draw_score(sf::RenderWindow &win, std::string str)
+{
+    if(str == "finish")
+    {
+        score_txt.setPosition(560,350);
+        score_num.setPosition(675,350);
+    }
+    win.draw(score_txt);
+    score_num.setString(number_to_string(score));
+    win.draw(score_num);
+}
+
+void Falcon_9::draw_mode(sf::RenderWindow &win, std::string str_mode)
+{
+    mode_txt.setString(str_mode);
+    win.draw(mode_txt);
+}
+
+void Falcon_9::increase_score(int s)
+{
+    score += s;
+}
+
+void Falcon_9::restart_clock()
+{
+    clock.restart();
+}
+
+void Falcon_9::reser_falcon()
+{
+    scope_pos_x = 640;
+    scope_pos_y = 360;
+    sprite_scope.setPosition(scope_pos_x, scope_pos_y);
+    health = 50;
+    score = 0;
+    score_txt.setPosition(1110,5);
+    score_num.setPosition(1215,5);
+    left_laser = false;
+    up_laser = false;
+    right_laser = false;
+    down_laser = false;
+    laser_bool = false;
+    right_or_left_laser = true;
+}
+
+std::string Falcon_9::number_to_string(int num)
+{
+    std::stringstream score;
+    score << num << std::endl;
+    return score.str();
+}
+
+
+
+
 
 

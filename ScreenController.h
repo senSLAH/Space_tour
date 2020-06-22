@@ -19,9 +19,16 @@ class ScreenController : public Menu{
     sf::Sprite back_ground;
     sf::Texture mode_txture;
     sf::Sprite mode;
+    sf::Texture how_to_play_texure;
+    sf::Sprite how_to_play_s;
     sf::Clock clock;
-    sf::Clock cool_dawn_attack;
+
+
     int key;
+    bool draw_stars_and_enemy;
+    bool reset_check;
+    bool restart_check_clock;
+    std::string mode_string;
 
 public:
     ScreenController(OpenSpace &s, Falcon_9 &f, Enemies &e, sf::RenderWindow &w);
@@ -45,6 +52,10 @@ public:
     //str == "on" - means we see htem on the screen or not
     //str == "move" - we need to move enemies or not
     bool on_the_screen(int &x, int &y, std::string str = "on") const;
+
+    void restart_clock();
+
+    void reset();
 
     void draw();
 };

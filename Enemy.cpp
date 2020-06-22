@@ -14,18 +14,15 @@ Enemy::Enemy(GameMode mode)
     switch (mode)
     {
         case NORMAL:
-            health = 10;
-            speed = 5;
-            attack = 10;
+            health = 1;
+            attack = 4;
             break;
         case HERO:
-            health = 15;
-            speed = 6;
-            attack = 15;
+            health = 10;
+            attack = 6;
             break;
         case GOD:
             health = 20;
-            speed = 7;
             attack = 20;
             break;
     }
@@ -34,11 +31,6 @@ Enemy::Enemy(GameMode mode)
 void Enemy::hit(int h)
 {
     health -= h;
-}
-
-void Enemy::set_health(int h)
-{
-    health = h;
 }
 
 int Enemy::get_health() const
@@ -134,7 +126,6 @@ void Enemy::attack_animations(sf::RenderWindow &win)
 
     win.draw(laser1);
     win.draw(laser2);
-
 }
 
 
