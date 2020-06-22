@@ -13,19 +13,20 @@ class Enemies : public Enemy{
     int last_pos_y;
     sf::Clock clock;
     sf::Clock clock1;
-    sf::Clock clock2;
-    sf::Time current_time;
+    sf::Clock cool_dawn_attack;
+
 
 public:
     Enemies(GameMode m);
-    void add_enemy();
-    void remove_enemy(int &idx);
     void move_back_to_screen(int idx);
-    void check_health(int idx);
+
     void set_position(int n, int pos_x, int pos_y);
-    void move_enemies();
     int get_enemies_count() const;
     Enemy get_enemy(int idx);
+    void add_enemy();
+    void remove_enemy(int &idx);
+    int attack(sf::RenderWindow &win);
+
     void draw_enemys(sf::RenderWindow &win);
 
 };

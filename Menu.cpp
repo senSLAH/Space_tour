@@ -16,10 +16,15 @@ Menu::Menu()
 
 }
 
-void Menu::set_state(int key)
+void Menu::set_state(int key, GameState state)
 {
+    if (state != NON)
+    {
+        last_state = START;
+        current_state = START;
+    }
     //36 - escape
-    if (key == 36 && start_screen == false)
+    if (key == 36 && !start_screen)
     {
         current_state = last_state;
         state_int = 0;
@@ -32,7 +37,7 @@ void Menu::set_state(int key)
     }
 
 
-    if (start_screen == true)
+    if (start_screen)
     {
         switch (key) {
             case 74:
@@ -72,16 +77,13 @@ void Menu::set_state(int key)
         }
     }
 
-    highlight.setPosition(65, highlight_pos_y);
-
-
     //std::cout << "\nCurrent state: "<< static_cast<int>(current_state);
 
 }
 
-void Menu::draw_menu(sf::RenderWindow &win)
+int Menu::get_state()
 {
-
+    return static_cast<int>(current_state);
 }
 
 

@@ -16,14 +16,17 @@ Enemy::Enemy(GameMode mode)
         case NORMAL:
             health = 10;
             speed = 5;
+            attack = 10;
             break;
         case HERO:
             health = 15;
             speed = 6;
+            attack = 15;
             break;
         case GOD:
             health = 20;
             speed = 7;
+            attack = 20;
             break;
     }
 }
@@ -31,11 +34,6 @@ Enemy::Enemy(GameMode mode)
 void Enemy::hit(int h)
 {
     health -= h;
-}
-
-void Enemy::set_speed(int s)
-{
-    health = s;
 }
 
 void Enemy::set_health(int h)
@@ -46,11 +44,6 @@ void Enemy::set_health(int h)
 int Enemy::get_health() const
 {
     return health;
-}
-
-int Enemy::get_speed() const
-{
-    return speed;
 }
 
 void Enemy::set_rand_position()
@@ -98,22 +91,51 @@ void Enemy::set_position(int pos_x, int pos_y, std::string str)
     enemy_sprite.setPosition(unit.position_x,unit.position_y);
 }
 
-Unit Enemy::get_position()
+Position Enemy::get_position() const
 {
     return unit;
 }
 
-Unit Enemy::set_rand_position_on_the_screen()
+Position Enemy::set_rand_position_on_the_screen()
 {
-    Unit position;
+    Position position;
     position.position_x = rand() % 960 + 160;
     position.position_y = rand() % 540;
     return position;
 }
 
-bool Enemy::need_or_not_move_enemy()
+int Enemy::get_attack() const
 {
-    return false;
+    return attack;
 }
+
+void Enemy::attack_animations(sf::RenderWindow &win)
+{
+    sf::VertexArray laser1(sf::Triangles,3);
+    sf::VertexArray laser2(sf::Triangles,3);
+    int x_rand = rand() % 580 + 350;
+    int y_rand = rand() % 440 + 100;
+
+    laser1[0].position = sf::Vector2f (unit.position_x + 40,unit.position_y + 55);
+    laser1[1].position = sf::Vector2f (unit.position_x + 54,unit.position_y + 65);
+    laser1[2].position = sf::Vector2f (x_rand,y_rand);
+
+    laser1[0].color = sf::Color::Red;
+    laser1[1].color = sf::Color::Red;
+    laser1[2].color = sf::Color(137, 19, 145);
+
+    laser2[0].position = sf::Vector2f (unit.position_x + 120,unit.position_y + 51);
+    laser2[1].position = sf::Vector2f (unit.position_x + 110,unit.position_y + 61);
+    laser2[2].position = sf::Vector2f (x_rand,y_rand);
+
+    laser2[0].color = sf::Color::Red;
+    laser2[1].color = sf::Color::Red;
+    laser2[2].color = sf::Color(137, 19, 145);
+
+    win.draw(laser1);
+    win.draw(laser2);
+
+}
+
 
 

@@ -19,19 +19,34 @@ class ScreenController : public Menu{
     sf::Sprite back_ground;
     sf::Texture mode_txture;
     sf::Sprite mode;
+    sf::Clock clock;
+    sf::Clock cool_dawn_attack;
     int key;
 
 public:
     ScreenController(OpenSpace &s, Falcon_9 &f, Enemies &e, sf::RenderWindow &w);
     void handleEvent(sf::Event &e);
-    void draw_gameplay(sf::RenderWindow &win) const;
-    void start_screen_func(sf::RenderWindow &win);
-    int collition_laser();
-    void option_screem_func();
-    void how_to_play_screen_func();
-    void running();
-    void draw();
 
+    void start_screen_func(sf::RenderWindow &win);
+
+    //draw menu -> start, game play
+    void game_play();
+
+    //draw menu -> option
+    void option_screem_func();
+
+    //draw menu -> how to play
+    void how_to_play_screen_func();
+
+    //collition_laser() - return 100 if we didn't hit enemy, else it return
+    //the index of enemy that we hit.
+    int collition_laser();
+
+    //str == "on" - means we see htem on the screen or not
+    //str == "move" - we need to move enemies or not
+    bool on_the_screen(int &x, int &y, std::string str = "on") const;
+
+    void draw();
 };
 
 

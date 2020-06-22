@@ -27,16 +27,18 @@ class Falcon_9 {
 
 public:
     Falcon_9();
-    void draw_falcon(sf::RenderWindow &win);
+
     void lasers(sf::RenderWindow &win);
+    void return_laser();
+    bool hit(int damage);
     void key_press(sf::Event &e, bool set);
     void set_health_bar();
     void set_laser_pos();
     int get_scope_pos_x() const;
     int get_scope_pos_y() const;
     bool get_laser_condition() const;
-    void return_laser();
-    int get_speed();
+
+    void draw_falcon(sf::RenderWindow &win);
 };
 
 

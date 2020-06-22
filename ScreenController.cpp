@@ -46,7 +46,7 @@ void ScreenController::draw()
     }
     if (current_state == RUNNING)
     {
-        running();
+        game_play();
     }
     if (current_state == SETTINGS)
     {
@@ -63,8 +63,16 @@ void ScreenController::start_screen_func(sf::RenderWindow &win)
     win.draw(back_ground);
 }
 
-void ScreenController::running()
+void ScreenController::game_play()
 {
+    sf::Time time = clock.getElapsedTime();
+
+    //check laser colition,
+    //get_laser_condition() -  return "true" if laser if laser shoots
+    //collition_laser() - return 100 if we didn't hit enemy, else it return
+    //the index of enemy that we hit.
+    //remove_enemy() - will hit enemy, and if health of enemy equel "0" enemy will
+    //be removed and than this function execute func add_anamy()
     if (falcon.get_laser_condition())
     {
         int enemy_n = collition_laser();
@@ -74,13 +82,28 @@ void ScreenController::running()
         }
     }
 
+    //Move enemy back to the screen
     for (int i = 0; i < enemies.get_enemies_count(); ++i)
     {
         int pos_x = enemies.get_enemy(i).get_position().position_x;
         int pos_y = enemies.get_enemy(i).get_position().position_y;
-        if (pos_x >= 1120 || pos_x <= 0 || pos_y <= 0 || pos_y > 540)
+
+        if (on_the_screen(pos_x, pos_y,"move"))
+        {
             enemies.move_back_to_screen(i);
+        }
+        if (on_the_screen(pos_x, pos_y))
+        {
+            int damage = enemies.attack(window);
+            if (!falcon.hit(damage))
+            {
+                std::cout << "dead!\n";
+                set_state(0,FINISHED);
+            }
+
+        }
     }
+
 
     space.set_star_position();
     space.draw_star(window);
@@ -111,6 +134,19 @@ int ScreenController::collition_laser()
 void ScreenController::option_screem_func()
 {
     window.draw(mode);
+}
+
+bool ScreenController::on_the_screen(int &x, int &y, std::string str) const
+{
+    if ((x >= 1020 || x <= 100 || y <= 100 || y > 440) && (str == "move"))
+    {
+        return true;
+    }
+    if(x <= 1120 && x >= 0 && y >= 0 && y < 540 && str == "on")
+    {
+        return true;
+    }
+    return false;
 }
 
 

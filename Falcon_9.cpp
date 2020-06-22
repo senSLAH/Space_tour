@@ -45,24 +45,6 @@ Falcon_9::Falcon_9()
 
 }
 
-void Falcon_9::draw_falcon(sf::RenderWindow &win)
-{
-    sf::Time time = clock.getElapsedTime();
-    current_time = time;
-    set_health_bar();
-    win.draw(sprite_scope);
-    win.draw(sprite_cabine);
-    for (int i = 0; i < health; ++i)
-    {
-        win.draw(health_bar[i]);
-    }
-}
-
-int Falcon_9::get_speed()
-{
-    return speed;
-}
-
 void Falcon_9::lasers(sf::RenderWindow &win)
 {
     sf::VertexArray laser1(sf::Quads,4);
@@ -179,6 +161,29 @@ void Falcon_9::set_health_bar()
         healt_elem.setPosition(health_bar_position_x,15);
         health_bar.push_back(healt_elem);
 
+    }
+}
+
+bool Falcon_9::hit(int damage)
+{
+    if (health >= damage)
+    {
+        health -= damage;
+        return true;
+    }
+    return false;
+}
+
+void Falcon_9::draw_falcon(sf::RenderWindow &win)
+{
+    sf::Time time = clock.getElapsedTime();
+    current_time = time;
+    set_health_bar();
+    win.draw(sprite_scope);
+    win.draw(sprite_cabine);
+    for (int i = 0; i < health; ++i)
+    {
+        win.draw(health_bar[i]);
     }
 }
 

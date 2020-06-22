@@ -2,7 +2,7 @@
 #define SPACETOUR__MENU_H
 
 
-enum GameState : int {START= 0, SETTINGS = 1, HOW_TO_PLAY = 2, RUNNING = 332, FINISHED = 333};
+enum GameState : int {START= 0, SETTINGS = 1, HOW_TO_PLAY = 2, RUNNING = 332, FINISHED = 333, NON};
 
 class Menu {
 
@@ -19,8 +19,8 @@ protected:
 
 public:
     Menu();
-    void set_state(int key);
-    void draw_menu(sf::RenderWindow &win);
+    void set_state(int key = 0, GameState state = NON);
+    int get_state();
 
     //GameState get_state();
 };
