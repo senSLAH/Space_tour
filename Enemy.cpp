@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Enemy.h"
+#include <cstring>
 
 Enemy::Enemy(GameMode mode)
 {

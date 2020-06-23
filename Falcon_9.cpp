@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Falcon_9.h"
 #include "sstream"
+#include <cstring>
 
 
 Falcon_9::Falcon_9()

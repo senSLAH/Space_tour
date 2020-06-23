@@ -1,10 +1,12 @@
 #include <iostream>
 #include "ScreenController.h"
+#include <cstring>
 
 
 ScreenController::ScreenController(OpenSpace &s, Falcon_9 &f, Enemies &e, sf::RenderWindow &w)
 :space(s), falcon(f), enemies(e), window(w)
 {
+
     if (!back_ground_txture.loadFromFile("../IMG/main_manu.png"))
     {
         std::cerr << strerror(errno) << std::endl;
